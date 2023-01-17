@@ -3,12 +3,15 @@ import * as render from "@cloudyskysoftware/pulumi-render";
 
 import { services } from "@cloudyskysoftware/pulumi-render/types/input";
 
+const config = new pulumi.Config();
+const ownerEmail = config.require("ownerEmail");
+
 const ownerId = pulumi
     .output(render.owners.listOwners())
     .apply(
         (result) =>
-            result.items.filter((i) => i.owner?.email === "pl@cloudysky.software")[0].owner?.id ||
-            ""
+            result.items.filter((i) => i.owner?.email === ownerEmail)[0].owner
+                ?.id || ""
     );
 
 const staticSiteDetails: services.StaticSiteServiceDetailsArgs = {
