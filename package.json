@@ -5,7 +5,7 @@
         "@types/node": "^14"
     },
     "dependencies": {
-        "@cloudyskysoftware/pulumi-render": "^0.0.46",
+        "@cloudyskysoftware/pulumi-render": "^0.0.47",
         "@pulumi/pulumi": "^3.46.0"
     }
 }
