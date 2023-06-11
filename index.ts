@@ -38,7 +38,7 @@ const envVars = new render.services.EnvVar("envVars", {
     envVars: [
         {
             key: "HUGO_VERSION",
-            value: "0.109.0",
+            value: "0.113.0",
         },
     ],
 });
