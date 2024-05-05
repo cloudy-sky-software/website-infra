@@ -33,15 +33,19 @@ const staticSite = new render.services.StaticSite(
     { protect: true }
 );
 
-const envVars = new render.services.EnvVar("envVars", {
-    serviceId: staticSite.id,
-    envVars: [
-        {
-            key: "HUGO_VERSION",
-            value: "0.113.0",
-        },
-    ],
-});
+const envVars = new render.services.EnvVars(
+    "envVars",
+    {
+        serviceId: staticSite.id,
+        envVars: [
+            {
+                key: "HUGO_VERSION",
+                value: "0.113.0",
+            },
+        ],
+    },
+    { aliases: [{ type: "render:services:EnvVar" }] }
+);
 
 // TODO: Importing child resources is blocked by https://github.com/cloudy-sky-software/pulumi-render/issues/101.
 // const domain = new render.services.CustomDomain(
