@@ -1,0 +1,42 @@
+name: Preview or deploy infra on Render
+
+on:
+  pull_request:
+    branches:
+      - main
+
+  push:
+    branches:
+      - main
+
+env:
+  STACK_NAME: css/prod
+  COMMAND: preview
+
+concurrency:
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+  group: pulumi-${{ github.ref }}
+
+jobs:
+  pulumi:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20.x"
+
+      - run: npm ci
+
+      - if: ${{ github.event_name == 'push' }}
+        run: |
+          echo "COMMAND=up" >> $GITHUB_ENV
+
+      - uses: pulumi/actions@v5
+        with:
+          command: ${{ env.COMMAND }}
+          stack-name: ${{ env.STACK_NAME }}
+          comment-on-pr: false
+        env:
+          PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
