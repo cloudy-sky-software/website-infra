@@ -14,7 +14,7 @@ const ownerId = pulumi
                 ?.id || ""
     );
 
-const staticSiteDetails: services.StaticSiteServiceDetailsArgs = {
+const staticSiteDetails: services.StaticSiteDetailsCreateArgs = {
     buildCommand: "make render-build",
     publishPath: "public",
     pullRequestPreviewsEnabled: "yes",
@@ -29,30 +29,26 @@ const staticSite = new render.services.StaticSite(
         autoDeploy: "yes",
         branch: "main",
         serviceDetails: staticSiteDetails,
+        type: "static_site",
+        rootDir: ".",
     },
     { protect: true }
 );
 
-const envVars = new render.services.EnvVars(
-    "envVars",
-    {
-        serviceId: staticSite.id,
-        envVars: [
-            {
-                key: "HUGO_VERSION",
-                value: "0.113.0",
-            },
-        ],
-    },
-    { aliases: [{ type: "render:services:EnvVar" }] }
-);
+const envVars = new render.services.EnvVarsForService("envVars", {
+    serviceId: staticSite.id,
+    envVars: [
+        {
+            key: "HUGO_VERSION",
+            value: "0.113.0",
+        },
+    ],
+});
 
-// TODO: Importing child resources is blocked by https://github.com/cloudy-sky-software/pulumi-render/issues/101.
-// const domain = new render.services.CustomDomain(
-//     "wwwCustomDomain",
-//     {
-//         name: "www.cloudysky.software",
-//         serviceId: staticSite.id,
-//     },
-//     { import: "cdm-c9jnkjrru51r6g7orbgg" }
-// );
+const wwwCustomDomain = new render.services.CustomDomain(
+    "wwwCustomDomain",
+    { name: "www.cloudysky.software", serviceId: staticSite.id },
+    {
+        protect: true,
+    }
+);
