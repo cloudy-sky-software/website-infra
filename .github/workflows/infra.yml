@@ -33,7 +33,7 @@ jobs:
         run: |
           echo "COMMAND=up" >> $GITHUB_ENV
 
-      - uses: pulumi/actions@v5
+      - uses: pulumi/actions@v6
         with:
           command: ${{ env.COMMAND }}
           stack-name: ${{ env.STACK_NAME }}
