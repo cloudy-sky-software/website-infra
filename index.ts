@@ -32,7 +32,7 @@ const staticSite = new render.services.StaticSite(
         type: "static_site",
         rootDir: ".",
     },
-    { protect: true }
+    { protect: true, ignoreChanges: ["ownerId"] }
 );
 
 const envVars = new render.services.EnvVarsForService("envVars", {
