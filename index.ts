@@ -10,8 +10,9 @@ const ownerId = pulumi
     .output(render.owners.listOwners())
     .apply(
         (result) =>
-            result.items.filter((i) => i.owner?.email === ownerEmail)[0].owner
-                ?.id || ""
+            result.items.filter(
+                (i) => i.owner?.email === ownerEmail && i.owner?.type === "user"
+            )[0].owner?.id || ""
     );
 
 const staticSiteDetails: services.StaticSiteDetailsCreateArgs = {
