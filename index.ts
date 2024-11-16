@@ -18,6 +18,9 @@ const staticSiteDetails: services.StaticSiteDetailsCreateArgs = {
     buildCommand: "make render-build",
     publishPath: "public",
     pullRequestPreviewsEnabled: "yes",
+    previews: {
+        generation: "automatic",
+    },
 };
 
 const staticSite = new render.services.StaticSite(
@@ -32,7 +35,7 @@ const staticSite = new render.services.StaticSite(
         type: "static_site",
         rootDir: ".",
     },
-    { protect: true, ignoreChanges: ["ownerId"] }
+    { protect: true }
 );
 
 const envVars = new render.services.EnvVarsForService("envVars", {
