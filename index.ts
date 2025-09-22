@@ -11,7 +11,7 @@ const ownerId = pulumi
     .apply(
         (result) =>
             result.items.filter((i) => i.owner?.email === ownerEmail)[0].owner
-                ?.id || ""
+                ?.id || "",
     );
 
 const staticSiteDetails: services.StaticSiteDetailsCreateArgs = {
@@ -21,6 +21,7 @@ const staticSiteDetails: services.StaticSiteDetailsCreateArgs = {
     previews: {
         generation: "automatic",
     },
+    renderSubdomainPolicy: "disabled",
 };
 
 const staticSite = new render.services.StaticSite(
@@ -35,7 +36,7 @@ const staticSite = new render.services.StaticSite(
         type: "static_site",
         rootDir: ".",
     },
-    { protect: true }
+    { protect: true },
 );
 
 const envVars = new render.services.EnvVarsForService("envVars", {
@@ -53,5 +54,5 @@ const wwwCustomDomain = new render.services.CustomDomain(
     { name: "www.cloudysky.software", serviceId: staticSite.id },
     {
         protect: true,
-    }
+    },
 );
