@@ -2,7 +2,7 @@
     "name": "website",
     "main": "index.ts",
     "devDependencies": {
-        "@types/node": "^22.0.0"
+        "@types/node": "^24.0.0"
     },
     "dependencies": {
         "@cloudyskysoftware/pulumi-render": "^0.5.0",
