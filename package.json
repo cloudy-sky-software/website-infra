@@ -6,6 +6,6 @@
     },
     "dependencies": {
         "@cloudyskysoftware/pulumi-render": "^0.6.0",
-        "@pulumi/pulumi": "^3.117.0"
+        "@pulumi/pulumi": "^3.268.0"
     }
 }
